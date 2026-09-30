@@ -1,0 +1,23 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+coverage/
+
+# Local secrets and browser data
+.env
+.env.*
+!.env.example
+*.local.json
+profile.json
+
+# Temporary files
+*.log
+*.tmp
+*.crx
+*.zip

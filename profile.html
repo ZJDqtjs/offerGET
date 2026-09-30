@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的资料 / OfferGET</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="profile-page">
+  <main class="profile-shell">
+    <header class="profile-header">
+      <div><p class="eyebrow">OFFERGET / YOUR PROFILE</p><h1>我的资料。</h1><p>只需维护一次。所有信息都只保存在当前浏览器中，并由你决定何时填入申请表。</p></div>
+      <div class="header-actions"><button class="text-button" id="exportButton">导出 JSON</button><button class="text-button" id="importButton">导入 JSON</button><input id="importInput" type="file" accept="application/json" hidden></div>
+    </header>
+    <form id="profileForm" class="profile-grid">
+      <section class="form-section"><h2><span>01</span>基本信息</h2><div class="form-fields">
+        <div class="field"><label for="fullName">姓名</label><input id="fullName" data-group="basics" autocomplete="name"></div>
+        <div class="field"><label for="email">邮箱</label><input id="email" data-group="basics" type="email" autocomplete="email"></div>
+        <div class="field"><label for="phone">手机</label><input id="phone" data-group="basics" type="tel" autocomplete="tel"></div>
+        <div class="field"><label for="location">所在城市</label><input id="location" data-group="basics"></div>
+        <div class="field"><label for="website">个人网站</label><input id="website" data-group="basics" type="url"></div>
+        <div class="field"><label for="linkedin">LinkedIn</label><input id="linkedin" data-group="basics" type="url"></div>
+        <div class="field"><label for="github">GitHub</label><input id="github" data-group="basics" type="url"></div>
+      </div></section>
+      <section class="form-section"><h2><span>02</span>教育经历</h2><div class="form-fields">
+        <div class="field full"><label for="school">学校</label><input id="school" data-group="education"></div>
+        <div class="field"><label for="degree">学历</label><input id="degree" data-group="education"></div>
+        <div class="field"><label for="major">专业</label><input id="major" data-group="education"></div>
+        <div class="field"><label for="educationStartDate">开始时间</label><input id="educationStartDate" data-key="startDate" data-group="education" type="month"></div>
+        <div class="field"><label for="educationEndDate">结束时间</label><input id="educationEndDate" data-key="endDate" data-group="education" type="month"></div>
+        <div class="field"><label for="gpa">GPA</label><input id="gpa" data-group="education"></div>
+      </div></section>
+      <section class="form-section wide"><h2><span>03</span>最近一段经历</h2><div class="form-fields">
+        <div class="field"><label for="company">公司</label><input id="company" data-group="experience"></div>
+        <div class="field"><label for="title">职位</label><input id="title" data-group="experience"></div>
+        <div class="field"><label for="experienceStartDate">开始时间</label><input id="experienceStartDate" data-key="startDate" data-group="experience" type="month"></div>
+        <div class="field"><label for="experienceEndDate">结束时间</label><input id="experienceEndDate" data-key="endDate" data-group="experience" placeholder="至今"></div>
+        <div class="field full"><label for="description">工作描述</label><textarea id="description" data-group="experience"></textarea></div>
+      </div></section>
+      <section class="form-section wide"><h2><span>04</span>求职偏好</h2><div class="form-fields">
+        <div class="field"><label for="salary">期望薪资</label><input id="salary" data-group="preferences"></div>
+        <div class="field"><label for="workAuthorization">工作许可</label><input id="workAuthorization" data-group="preferences"></div>
+        <div class="field"><label for="availability">可入职时间</label><input id="availability" data-group="preferences"></div>
+      </div></section>
+    </form>
+    <div class="profile-footer"><span>数据存储位置：本地浏览器</span><button class="save-button" id="saveButton">保存资料 →</button></div>
+  </main>
+  <div class="toast" id="toast">资料已保存</div>
+  <script src="profile.js"></script>
+</body>
+</html>
