@@ -11,6 +11,34 @@
 
 资料默认来自 `profile.json`，首次安装后会复制到 `chrome.storage.local`。之后的编辑、导入和导出都在浏览器本地完成，不会发送到服务器。
 
+## 资料结构
+
+`profile.json` 使用 `schemaVersion` 标记结构版本（当前为 2）。可多条填写的经历类信息是数组，每项一条记录，编辑页支持随时增删：
+
+| 分组 | 类型 | 说明 |
+| --- | --- | --- |
+| `basics` | 对象 | 基本信息、联系方式、个人链接 |
+| `education` | 数组 | 教育经历 |
+| `internships` | 数组 | 实习 / 工作经历 |
+| `campus` | 数组 | 校园经历、社团与职务 |
+| `projects` | 数组 | 项目经历（描述与职责分开） |
+| `honors` | 数组 | 荣誉奖项 |
+| `certificates` | 数组 | 技能证书 |
+| `volunteer` | 数组 | 志愿活动 |
+| `publications` | 数组 | 论文与著作 |
+| `skills` | 对象 | 技术技能、工具、软技能 |
+| `languages` | 数组 | 语言能力与成绩 |
+| `links` | 对象 | 作品集、代表作品、博客 |
+| `summary` | 对象 | 自我介绍与求职意向 |
+| `preferences` | 对象 | 求职偏好 |
+| `compensation` | 对象 | 薪资信息 |
+| `additional` | 对象 | 推荐人及其他补充 |
+| `gaming` | 数组 | 兴趣爱好 |
+
+旧版本（`schemaVersion < 2`）保存的资料会在打开编辑页或填充表单时自动迁移，无需手动处理。
+
 ## 说明
 
-扩展根据字段的 `label`、`name`、`id`、`placeholder` 和附近文本匹配常见中英文标签。不同网站的自定义字段可能需要在 `content.js` 的 `FIELD_ALIASES` 中补充别名。
+扩展根据字段的 `label`、`name`、`id`、`placeholder` 和附近文本匹配常见中英文标签。匹配时优先采用命中的最长别名，避免「职责」误配到「项目职责」这类情况。
+
+同一分组有多条记录时，页面上的多个同名字段会按顺序依次填入。不同网站的自定义字段可能需要在 `content.js` 的 `FIELD_ALIASES` 中补充别名。

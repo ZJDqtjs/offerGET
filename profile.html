@@ -12,40 +12,273 @@
       <div><p class="eyebrow">OFFERGET / YOUR PROFILE</p><h1>我的资料。</h1><p>只需维护一次。所有信息都只保存在当前浏览器中，并由你决定何时填入申请表。</p></div>
       <div class="header-actions"><button class="text-button" id="exportButton">导出 JSON</button><button class="text-button" id="importButton">导入 JSON</button><input id="importInput" type="file" accept="application/json" hidden></div>
     </header>
+
+    <nav class="profile-nav" id="profileNav" aria-label="资料分区导航"></nav>
+
     <form id="profileForm" class="profile-grid">
-      <section class="form-section"><h2><span>01</span>基本信息</h2><div class="form-fields">
-        <div class="field"><label for="fullName">姓名</label><input id="fullName" data-group="basics" autocomplete="name"></div>
-        <div class="field"><label for="email">邮箱</label><input id="email" data-group="basics" type="email" autocomplete="email"></div>
-        <div class="field"><label for="phone">手机</label><input id="phone" data-group="basics" type="tel" autocomplete="tel"></div>
-        <div class="field"><label for="location">所在城市</label><input id="location" data-group="basics"></div>
-        <div class="field"><label for="website">个人网站</label><input id="website" data-group="basics" type="url"></div>
-        <div class="field"><label for="linkedin">LinkedIn</label><input id="linkedin" data-group="basics" type="url"></div>
-        <div class="field"><label for="github">GitHub</label><input id="github" data-group="basics" type="url"></div>
-      </div></section>
-      <section class="form-section"><h2><span>02</span>教育经历</h2><div class="form-fields">
-        <div class="field full"><label for="school">学校</label><input id="school" data-group="education"></div>
-        <div class="field"><label for="degree">学历</label><input id="degree" data-group="education"></div>
-        <div class="field"><label for="major">专业</label><input id="major" data-group="education"></div>
-        <div class="field"><label for="educationStartDate">开始时间</label><input id="educationStartDate" data-key="startDate" data-group="education" type="month"></div>
-        <div class="field"><label for="educationEndDate">结束时间</label><input id="educationEndDate" data-key="endDate" data-group="education" type="month"></div>
-        <div class="field"><label for="gpa">GPA</label><input id="gpa" data-group="education"></div>
-      </div></section>
-      <section class="form-section wide"><h2><span>03</span>最近一段经历</h2><div class="form-fields">
-        <div class="field"><label for="company">公司</label><input id="company" data-group="experience"></div>
-        <div class="field"><label for="title">职位</label><input id="title" data-group="experience"></div>
-        <div class="field"><label for="experienceStartDate">开始时间</label><input id="experienceStartDate" data-key="startDate" data-group="experience" type="month"></div>
-        <div class="field"><label for="experienceEndDate">结束时间</label><input id="experienceEndDate" data-key="endDate" data-group="experience" placeholder="至今"></div>
-        <div class="field full"><label for="description">工作描述</label><textarea id="description" data-group="experience"></textarea></div>
-      </div></section>
-      <section class="form-section wide"><h2><span>04</span>求职偏好</h2><div class="form-fields">
-        <div class="field"><label for="salary">期望薪资</label><input id="salary" data-group="preferences"></div>
-        <div class="field"><label for="workAuthorization">工作许可</label><input id="workAuthorization" data-group="preferences"></div>
-        <div class="field"><label for="availability">可入职时间</label><input id="availability" data-group="preferences"></div>
-      </div></section>
+
+      <section class="form-section wide">
+        <h2><span>01</span>基本信息</h2>
+        <div class="form-fields">
+          <div class="field"><label for="fullName">姓名</label><input id="fullName" data-group="basics" autocomplete="name"></div>
+          <div class="field"><label for="englishName">英文名</label><input id="englishName" data-group="basics"></div>
+          <div class="field"><label for="surnamePinyin">姓（拼音）</label><input id="surnamePinyin" data-group="basics"></div>
+          <div class="field"><label for="givenNamePinyin">名（拼音）</label><input id="givenNamePinyin" data-group="basics"></div>
+          <div class="field"><label for="phone">手机</label><input id="phone" data-group="basics" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="email">邮箱</label><input id="email" data-group="basics" type="email" autocomplete="email"></div>
+          <div class="field"><label for="birthday">出生日期</label><input id="birthday" data-group="basics" placeholder="2004-07-22"></div>
+          <div class="field"><label for="gender">性别</label><input id="gender" data-group="basics"></div>
+          <div class="field"><label for="nationality">国籍</label><input id="nationality" data-group="basics"></div>
+          <div class="field"><label for="location">所在城市</label><input id="location" data-group="basics"></div>
+          <div class="field"><label for="hometown">籍贯</label><input id="hometown" data-group="basics"></div>
+          <div class="field"><label for="imType">IM 类型</label><input id="imType" data-group="basics" placeholder="微信 / QQ"></div>
+          <div class="field"><label for="im">IM 账号</label><input id="im" data-group="basics"></div>
+          <div class="field"><label for="website">个人网站</label><input id="website" data-group="basics" type="url"></div>
+          <div class="field"><label for="github">GitHub</label><input id="github" data-group="basics" type="url"></div>
+          <div class="field"><label for="linkedin">LinkedIn</label><input id="linkedin" data-group="basics" type="url"></div>
+        </div>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>02</span>教育经历</h2><button type="button" class="ghost-button" data-add="education">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="education"></div>
+        <template id="tpl-education">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>学校</label><input data-field="school"></div>
+              <div class="field"><label>学校所在地</label><input data-field="schoolLocation"></div>
+              <div class="field"><label>学历</label><input data-field="degree"></div>
+              <div class="field"><label>学院</label><input data-field="college"></div>
+              <div class="field"><label>专业</label><input data-field="major"></div>
+              <div class="field"><label>学习形式</label><input data-field="studyMode"></div>
+              <div class="field"><label>开始时间</label><input data-field="startDate" placeholder="2023-09"></div>
+              <div class="field"><label>结束时间</label><input data-field="endDate" placeholder="2027-06 / 至今"></div>
+              <div class="field"><label>GPA</label><input data-field="gpa"></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>03</span>实习 / 工作经历</h2><button type="button" class="ghost-button" data-add="internships">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="internships"></div>
+        <template id="tpl-internships">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>公司 / 单位</label><input data-field="company"></div>
+              <div class="field"><label>职位</label><input data-field="title"></div>
+              <div class="field"><label>工作地点</label><input data-field="workLocation"></div>
+              <div class="field"><label>所属行业</label><input data-field="industry"></div>
+              <div class="field"><label>开始时间</label><input data-field="startDate" placeholder="2023-09"></div>
+              <div class="field"><label>结束时间</label><input data-field="endDate" placeholder="至今"></div>
+              <div class="field full"><label>工作描述</label><textarea data-field="description"></textarea></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>04</span>校园经历</h2><button type="button" class="ghost-button" data-add="campus">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="campus"></div>
+        <template id="tpl-campus">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>组织 / 社团</label><input data-field="organization"></div>
+              <div class="field"><label>担任职务</label><input data-field="role"></div>
+              <div class="field"><label>开始时间</label><input data-field="startDate" placeholder="2023-09"></div>
+              <div class="field"><label>结束时间</label><input data-field="endDate"></div>
+              <div class="field full"><label>经历描述</label><textarea data-field="description"></textarea></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>05</span>项目经历</h2><button type="button" class="ghost-button" data-add="projects">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="projects"></div>
+        <template id="tpl-projects">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>项目名称</label><input data-field="projectName"></div>
+              <div class="field"><label>项目角色</label><input data-field="projectRole"></div>
+              <div class="field"><label>开始时间</label><input data-field="startDate" placeholder="2023-09"></div>
+              <div class="field"><label>结束时间</label><input data-field="endDate"></div>
+              <div class="field full"><label>项目链接</label><input data-field="projectLink" type="url"></div>
+              <div class="field full"><label>项目描述</label><textarea data-field="projectDescription"></textarea></div>
+              <div class="field full"><label>项目职责</label><textarea data-field="projectDuty"></textarea></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>06</span>荣誉奖项</h2><button type="button" class="ghost-button" data-add="honors">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="honors"></div>
+        <template id="tpl-honors">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>奖项名称</label><input data-field="honorName"></div>
+              <div class="field"><label>奖项级别</label><input data-field="honorLevel" placeholder="国家级 / 省级 / 校级"></div>
+              <div class="field"><label>获奖时间</label><input data-field="honorDate"></div>
+              <div class="field"><label>颁发单位</label><input data-field="honorIssuer"></div>
+              <div class="field full"><label>奖项描述</label><textarea data-field="honorDescription"></textarea></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>07</span>技能证书</h2><button type="button" class="ghost-button" data-add="certificates">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="certificates"></div>
+        <template id="tpl-certificates">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>证书名称</label><input data-field="certificateName"></div>
+              <div class="field"><label>发证机构</label><input data-field="certificateIssuer"></div>
+              <div class="field"><label>等级 / 分数</label><input data-field="certificateScore"></div>
+              <div class="field"><label>发证时间</label><input data-field="certificateDate"></div>
+              <div class="field full"><label>证书编号</label><input data-field="certificateNumber"></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>08</span>志愿活动</h2><button type="button" class="ghost-button" data-add="volunteer">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="volunteer"></div>
+        <template id="tpl-volunteer">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>志愿组织</label><input data-field="volunteerOrganization"></div>
+              <div class="field"><label>志愿岗位</label><input data-field="volunteerRole"></div>
+              <div class="field"><label>开始时间</label><input data-field="startDate" placeholder="2023-09"></div>
+              <div class="field"><label>结束时间</label><input data-field="endDate"></div>
+              <div class="field full"><label>服务时长</label><input data-field="volunteerHours" placeholder="如 80 小时"></div>
+              <div class="field full"><label>志愿描述</label><textarea data-field="volunteerDescription"></textarea></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>09</span>论文与著作</h2><button type="button" class="ghost-button" data-add="publications">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="publications"></div>
+        <template id="tpl-publications">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>论文 / 著作名称</label><input data-field="publicationTitle"></div>
+              <div class="field"><label>发表期刊 / 会议</label><input data-field="publicationVenue"></div>
+              <div class="field"><label>发表时间</label><input data-field="publicationDate"></div>
+              <div class="field"><label>作者排序</label><input data-field="publicationAuthorRank" placeholder="第一作者"></div>
+              <div class="field full"><label>论文链接</label><input data-field="publicationLink" type="url"></div>
+              <div class="field full"><label>论文摘要</label><textarea data-field="publicationDescription"></textarea></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section">
+        <h2><span>10</span>技能特长</h2>
+        <div class="form-fields">
+          <div class="field full"><label for="technical">技术技能</label><textarea id="technical" data-group="skills"></textarea></div>
+          <div class="field full"><label for="tools">工具 / 软件</label><textarea id="tools" data-group="skills"></textarea></div>
+          <div class="field full"><label for="soft">软技能</label><textarea id="soft" data-group="skills"></textarea></div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><span>11</span>作品链接</h2>
+        <div class="form-fields">
+          <div class="field full"><label for="portfolio">作品集</label><input id="portfolio" data-group="links" type="url"></div>
+          <div class="field full"><label for="works">代表作品</label><input id="works" data-group="links" type="url"></div>
+          <div class="field full"><label for="blog">博客 / 专栏</label><input id="blog" data-group="links" type="url"></div>
+        </div>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>12</span>语言能力</h2><button type="button" class="ghost-button" data-add="languages">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="languages"></div>
+        <template id="tpl-languages">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>语种</label><input data-field="languageName"></div>
+              <div class="field"><label>精通程度</label><input data-field="languageLevel"></div>
+              <div class="field full"><label>证书 / 成绩</label><input data-field="languageScore"></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <h2><span>13</span>自我介绍与求职意向</h2>
+        <div class="form-fields">
+          <div class="field full"><label for="selfIntroduction">自我介绍</label><textarea id="selfIntroduction" data-group="summary"></textarea></div>
+          <div class="field full"><label for="careerObjective">求职意向</label><textarea id="careerObjective" data-group="summary"></textarea></div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><span>14</span>求职偏好</h2>
+        <div class="form-fields">
+          <div class="field full"><label for="salary">期望薪资</label><input id="salary" data-group="preferences"></div>
+          <div class="field full"><label for="workAuthorization">工作许可</label><input id="workAuthorization" data-group="preferences"></div>
+          <div class="field full"><label for="availability">可入职时间</label><input id="availability" data-group="preferences"></div>
+          <div class="field full"><label for="jobType">求职类型</label><input id="jobType" data-group="preferences" placeholder="全职 / 实习"></div>
+          <div class="field full"><label for="preferredLocation">期望城市</label><input id="preferredLocation" data-group="preferences"></div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><span>15</span>薪资信息</h2>
+        <div class="form-fields">
+          <div class="field"><label for="currentAnnual">当前年薪</label><input id="currentAnnual" data-group="compensation"></div>
+          <div class="field"><label for="currentMonthly">当前月薪</label><input id="currentMonthly" data-group="compensation"></div>
+          <div class="field"><label for="salaryMonths">发薪月数</label><input id="salaryMonths" data-group="compensation"></div>
+          <div class="field"><label for="bonus">奖金</label><input id="bonus" data-group="compensation"></div>
+          <div class="field"><label for="stock">股票 / 期权</label><input id="stock" data-group="compensation"></div>
+          <div class="field"><label for="benefits">福利</label><input id="benefits" data-group="compensation"></div>
+          <div class="field full"><label for="expectedAnnual">期望年薪</label><input id="expectedAnnual" data-group="compensation"></div>
+        </div>
+      </section>
+
+      <section class="form-section wide">
+        <div class="section-head"><h2><span>16</span>兴趣爱好</h2><button type="button" class="ghost-button" data-add="gaming">+ 添加一条</button></div>
+        <div class="repeater" data-repeater="gaming"></div>
+        <template id="tpl-gaming">
+          <article class="entry-card">
+            <header class="entry-head"><span class="entry-index">#1</span><button type="button" class="icon-button" data-remove>移除</button></header>
+            <div class="form-fields">
+              <div class="field"><label>名称</label><input data-field="name"></div>
+              <div class="field"><label>投入程度</label><input data-field="duration"></div>
+              <div class="field full"><label>详细说明</label><textarea data-field="details"></textarea></div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="form-section wide">
+        <h2><span>17</span>其他补充</h2>
+        <div class="form-fields">
+          <div class="field full"><label for="references">推荐人</label><textarea id="references" data-group="additional"></textarea></div>
+          <div class="field full"><label for="other">补充信息</label><textarea id="other" data-group="additional"></textarea></div>
+        </div>
+      </section>
+
     </form>
+
     <div class="profile-footer"><span>数据存储位置：本地浏览器</span><button class="save-button" id="saveButton">保存资料 →</button></div>
   </main>
   <div class="toast" id="toast">资料已保存</div>
+  <script src="profile-model.js"></script>
   <script src="profile.js"></script>
 </body>
 </html>
