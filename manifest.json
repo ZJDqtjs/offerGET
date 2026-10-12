@@ -20,6 +20,11 @@
       "matches": ["<all_urls>"],
       "js": ["profile-model.js", "content.js"],
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://offerqingbaoju.cn/*", "https://*.offerqingbaoju.cn/*"],
+      "js": ["offerqingbaoju/filter.js"],
+      "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [

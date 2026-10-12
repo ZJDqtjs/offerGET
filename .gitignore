@@ -21,3 +21,6 @@ profile.json
 *.tmp
 *.crx
 *.zip
+
+# Site-specific code (kept local, not tracked)
+offerqingbaoju/
