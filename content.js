@@ -159,9 +159,9 @@ function setFieldValue(field, value) {
 }
 
 async function fillForm() {
-  const { profile } = await chrome.storage.local.get('profile');
+  const profile = getActiveProfile(await loadProfileStore());
   if (!profile) return { filled: 0, total: 0 };
-  const values = buildValues(migrateProfile(profile));
+  const values = buildValues(profile);
   const fields = [...document.querySelectorAll('input, textarea, select')].filter((field) => {
     if (field.disabled || field.readOnly) return false;
     return !['hidden', 'file', 'checkbox', 'radio', 'submit', 'button', 'reset'].includes(field.type);

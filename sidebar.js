@@ -1,11 +1,43 @@
 const fillButton = document.querySelector('#fillButton');
 const profileButton = document.querySelector('#profileButton');
 const statusLine = document.querySelector('#statusLine');
+const configSelect = document.querySelector('#configSelect');
+
+let store = { profiles: [], activeProfileId: '' };
 
 function setStatus(message, kind = '') {
   statusLine.className = `status-line ${kind}`;
   statusLine.querySelector('span:last-child').textContent = message;
 }
+
+function renderConfigs() {
+  configSelect.replaceChildren();
+  store.profiles.forEach((profile) => {
+    const option = document.createElement('option');
+    option.value = profile.id;
+    option.textContent = profile.name;
+    configSelect.append(option);
+  });
+  configSelect.value = store.activeProfileId;
+
+  const active = getActiveProfile(store);
+  setStatus(active ? `将使用「${active.name}」填充` : '还没有可用的资料配置');
+}
+
+async function loadConfigs() {
+  store = await loadProfileStore();
+  renderConfigs();
+}
+
+configSelect.addEventListener('change', async () => {
+  store.activeProfileId = configSelect.value;
+  await saveProfileStore(store);
+  renderConfigs();
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && (changes.profiles || changes.activeProfileId)) loadConfigs();
+});
 
 fillButton.addEventListener('click', async () => {
   fillButton.disabled = true;
@@ -22,3 +54,6 @@ fillButton.addEventListener('click', async () => {
 });
 
 profileButton.addEventListener('click', () => chrome.runtime.sendMessage({ type: 'open-profile' }));
+
+document.querySelector('#version').textContent = `v${chrome.runtime.getManifest().version}`;
+loadConfigs();

@@ -13,6 +13,17 @@
       <div class="header-actions"><button class="text-button" id="exportButton">导出 JSON</button><button class="text-button" id="importButton">导入 JSON</button><input id="importInput" type="file" accept="application/json" hidden></div>
     </header>
 
+    <div class="config-bar">
+      <span class="config-label">当前配置</span>
+      <select id="configSelect" class="config-select" aria-label="切换配置"></select>
+      <input id="configName" class="config-name" aria-label="配置名称" placeholder="配置名称">
+      <div class="config-actions">
+        <button type="button" class="text-button" id="newConfigButton">新建</button>
+        <button type="button" class="text-button" id="duplicateConfigButton">复制</button>
+        <button type="button" class="text-button" id="deleteConfigButton">删除</button>
+      </div>
+    </div>
+
     <nav class="profile-nav" id="profileNav" aria-label="资料分区导航"></nav>
 
     <form id="profileForm" class="profile-grid">
