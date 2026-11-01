@@ -64,3 +64,7 @@ chrome.storage.local
 扩展根据字段的 `label`、`name`、`id`、`placeholder` 和附近文本匹配常见中英文标签。匹配时优先采用命中的最长别名，避免「职责」误配到「项目职责」这类情况。
 
 同一分组有多条记录时，页面上的多个同名字段会按顺序依次填入。不同网站的自定义字段可能需要在 `content.js` 的 `FIELD_ALIASES` 中补充别名。
+
+## 开源协议
+
+本项目采用 [MIT License](./LICENSE)。
